@@ -9,11 +9,17 @@ def mage_counter() -> callable:
 
 
 def spell_accumulator(initial_power: int) -> callable:
-	pass
+	def increment_power(power: int = 0) -> int:
+		nonlocal initial_power
+		initial_power += power
+		return initial_power
+	return increment_power
 
 
 def enchantment_factory(enchantment_type: str) -> callable:
-	pass
+	def enchant(item: str) -> str:
+		return f"{enchantment_type} {item}"
+	return enchant
 
 
 def memory_vault() -> dict[str, callable]:
@@ -27,4 +33,8 @@ if __name__ == "__main__":
 	for i in range(3):
 		print(f"Call {i}:", count_mage())
 
-	print("\n Testing enchantment factory...")
+	flaming = enchantment_factory("Flaming")
+	frozen = enchantment_factory("Frozen")
+	print("\nTesting enchantment factory...")
+	print(f"{flaming("Sword")}")
+	print(f"{frozen("Shield")}")
